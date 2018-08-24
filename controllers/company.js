@@ -1,11 +1,11 @@
 'use strict'
 var fs = require('fs');
 var path = require('path');
-var bcrypt = require('bcrypt-nodejs'); //<---------
-var Company = require('../models/company');  //<---------
+var bcrypt = require('bcrypt-nodejs');
+var Company = require('../models/company');
 var jwt = require('../services/jwt');
 
-function saveCompany(req, res){  //<------------------
+function saveCompany(req, res){  
   var company = new Company();
 
   var params = req.body;

@@ -21,7 +21,7 @@ function getQuestions(req, res){
         res.status(500).send({message: 'Error en la peticion'});
       }else{
         if(!questions){
-          res.status(404).send({message: 'No hau preguntas'});
+          res.status(404).send({message: 'No hay preguntas'});
         }else{
           res.status(200).send({questions});
         }
