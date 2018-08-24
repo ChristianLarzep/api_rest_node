@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var Course = require('../models/course');
 var jwt = require('../services/jwt');
+var mongoosePaginate = require('mongoose-pagination');
 
 function saveCourse(req, res){
   var course = new Course();
@@ -54,23 +55,26 @@ function updateCourse(req, res){
 }
 
 function getCourses(req, res){
-  var courseId = req.params.course;
-
-  if(!courseId){
-    var find = Course.find({}).sort('name');
+  if(req.params.page){
+    var page = req.params.page;
   }else{
-    var find = Course.find({course: artistId}).sort('name');
+    var page = 1;
   }
 
-  find.populate({path: 'course'}).exec((err, courses) => {
+  var itemsPerPage = 10;
+
+  Course.find().sort('name').paginate(page, itemsPerPage, function(err, courses, total){
     if(err){
       res.status(500).send({message: 'Error en la peticion'});
     }else{
-      if(!courses){
-        res.status(404).send({message: 'No hay cursos'});
-      }else{
-        res.status(200).send({courses});
-      }
+       if(!courses){
+         res.status(404).send({message: 'No hay cursos'});
+       }else{
+         return res.status(200).send({
+           total_items: total,
+           artists: courses
+         });
+       }
     }
   });
 }

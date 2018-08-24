@@ -16,7 +16,8 @@ var CompanySchema = Schema({
   municipality: String,
   state: String,
   tel: Number,
-  image: String
+  image: String,
+  role: String
 });
 
 module.exports = mongoose.model('Company', CompanySchema);

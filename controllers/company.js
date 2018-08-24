@@ -22,6 +22,7 @@ function saveCompany(req, res){  //<------------------
   company.state = params.state;
   company.tel = params.tel;
   company.image = 'null';
+  company.role = "ROLE_COMPANY";
 
   if(params.password){
     //Escriptar password
@@ -92,17 +93,36 @@ function updateCompany(req, res){
   var companyId = req.params.id;
   var update = req.body;
 
-  Company.findByIdAndUpdate(companyId, update, (err, companyUpdated) => {
-    if(err){
-      res.status(500).send({message: 'Error al actualizar la empresa'});
-    }else{
-      if(!companyUpdated){
-        res.status(404).send({message: 'No se han podido actualizar los datos de la empresa'});
+  if(update.password){
+    //Escriptar password
+    bcrypt.hash(req.body.password, null, null, function(err, hash){
+      update.password = hash;
+
+      Company.findByIdAndUpdate(companyId, update, (err, companyUpdated) => {
+        if(err){
+          res.status(500).send({message: 'Error al actualizar la empresa'});
+        }else{
+          if(!companyUpdated){
+            res.status(404).send({message: 'No se han podido actualizar los datos de la empresa'});
+          }else{
+            res.status(200).send({company: companyUpdated});
+          }
+        }
+      });
+    });
+  }else{
+    Company.findByIdAndUpdate(companyId, update, (err, companyUpdated) => {
+      if(err){
+        res.status(500).send({message: 'Error al actualizar la empresa'});
       }else{
-        res.status(200).send({company: companyUpdated});
+        if(!companyUpdated){
+          res.status(404).send({message: 'No se han podido actualizar los datos de la empresa'});
+        }else{
+          res.status(200).send({company: companyUpdated});
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 function uploadImage(req, res){

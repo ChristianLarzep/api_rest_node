@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var CourseSchema = Schema({
   name: String,
   description: String,
-  cost: Boolean,
+  cost: Number,
   duration: String,
   link: String,
   image: String
