@@ -7,7 +7,7 @@ var CourseSchema = Schema({
   name: String,
   description: String,
   cost: Number,
-  duration: String,
+  duration: Number,
   link: String,
   image: String
 });
