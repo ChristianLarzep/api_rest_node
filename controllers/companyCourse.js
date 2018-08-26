@@ -1,9 +1,5 @@
 'use strict'
 
-var path = require('path')
-var fs = require('fs');
-var mongoosePaginate = require('mongoose-pagination');
-
 var CompanyCourse = require('../models/companyCourse');
 
 var Course = require('../models/course');

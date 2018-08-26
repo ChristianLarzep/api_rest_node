@@ -2,10 +2,8 @@
 
 var path = require('path')
 var fs = require('fs');
-var mongoosePaginate = require('mongoose-pagination');
 
 var Collaborator = require('../models/collaborator');
-var Company = require('../models/company');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwtCol');
 
@@ -23,7 +21,7 @@ function getCollaborators(req, res){
         res.status(500).send({message: 'Error en la peticion'});
       }else{
         if(!collaborators){
-          res.status(404).send({message: 'No hay colaopradores'});
+          res.status(404).send({message: 'No hay colaboradores'});
         }else{
           res.status(200).send({collaborators});
         }
@@ -170,7 +168,7 @@ function deleteCollaborator(req, res){
       res.status(500).send({message: 'Error en el servidor'});
     }else{
       if(!collaboratorRemoved){
-        res.status(404).send({message: 'No se ha borradoel colaborador'});
+        res.status(404).send({message: 'No se ha borrado el colaborador'});
       }else{
         res.status(200).send({colaborador: collaboratorRemoved});
       }
